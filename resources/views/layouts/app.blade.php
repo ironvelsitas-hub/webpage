@@ -511,9 +511,233 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #e55a2b;
         }
+
+        /* Update Notification Toast */
+        .update-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            padding: 15px;
+            color: white;
+            z-index: 10002;
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .update-toast.show {
+            transform: translateY(0);
+        }
+
+        .update-toast-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .update-toast-content i {
+            font-size: 24px;
+        }
+
+        .update-toast-content div {
+            flex: 1;
+        }
+
+        .update-toast-content strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .update-toast-content small {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .update-btn {
+            background: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Network Status Toast */
+        .network-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            border-radius: 12px;
+            padding: 12px 20px;
+            z-index: 10002;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            min-width: 250px;
+        }
+
+        .network-toast.show {
+            transform: translateX(0);
+        }
+
+        .network-online {
+            background: #28a745;
+            color: white;
+        }
+
+        .network-offline {
+            background: #dc3545;
+            color: white;
+        }
+
+        .network-toast-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .network-toast-content i {
+            font-size: 18px;
+        }
+
+        /* PWA Install Banner */
+        .pwa-install-banner {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2C1810 0%, #4A2C1A 100%);
+            border-radius: 20px;
+            padding: 15px;
+            color: white;
+            z-index: 10001;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideUp 0.5s ease;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .pwa-install-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pwa-install-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .pwa-install-text {
+            flex: 1;
+        }
+
+        .pwa-install-text h6 {
+            margin: 0 0 5px 0;
+            font-weight: bold;
+        }
+
+        .pwa-install-text p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .pwa-install-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pwa-install-btn {
+            background: #FF6B35;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pwa-install-btn:hover {
+            background: #e55a2b;
+            transform: scale(1.05);
+        }
+
+        .pwa-close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pwa-close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 576px) {
+            .pwa-install-banner {
+                bottom: 90px;
+                left: 10px;
+                right: 10px;
+            }
+            .pwa-install-content {
+                flex-wrap: wrap;
+            }
+            .pwa-install-buttons {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 <body>
+
+<!-- PWA Install Banner -->
+<div class="pwa-install-banner" id="pwa-install-banner">
+    <div class="pwa-install-content">
+        <div class="pwa-install-icon">
+            <i class="fas fa-mug-hot"></i>
+        </div>
+        <div class="pwa-install-text">
+            <h6>Instal Kopi Ancol App</h6>
+            <p>Pasang aplikasi untuk pengalaman lebih nyaman dan akses cepat</p>
+        </div>
+        <div class="pwa-install-buttons">
+            <button class="pwa-close-btn" id="pwa-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="pwa-install-btn" id="pwa-install-btn">
+                <i class="fas fa-download"></i> Install
+            </button>
+        </div>
+    </div>
+</div>
 
 <!-- Floating Cart Button -->
 <div class="floating-cart no-print">
@@ -596,226 +820,140 @@
 <canvas id="confetti-canvas"></canvas>
 
 <style>
-<!-- Mini Cart Sidebar -->
-<div class="overlay" id="overlay" onclick="toggleMiniCart()"></div>
-<div class="mini-cart-sidebar" id="miniCartSidebar">
-    <div class="mini-cart-header">
-        <div class="d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">
-                <i class="fas fa-shopping-cart"></i> Keranjang Belanja
-            </h5>
-            <button class="btn btn-sm btn-light" onclick="toggleMiniCart()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
-    <div class="mini-cart-items" id="miniCartItems">
-        @php
-            $cart = session()->get('cart', []);
-            $total = 0;
-            $discount = session()->get('discount');
-            $discountAmount = $discount['amount'] ?? 0;
-        @endphp
-        @if(count($cart) > 0)
-            @foreach($cart as $id => $item)
-                @php
-                    $subtotal = $item['price'] * $item['quantity'];
-                    $total += $subtotal;
-                @endphp
-                <div class="mini-cart-item">
-                    <div class="mini-cart-product-info">
-                        <div class="mini-cart-product-name">
-                            <strong>{{ $item['name'] ?? 'Produk' }}</strong>
-                        </div>
-                        <div class="text-muted small">
-                            {{ $item['quantity'] }}x @ Rp {{ number_format($item['price'] ?? 0, 0, ',', '.') }}
-                        </div>
-                    </div>
-                    <div class="mini-cart-product-actions">
-                        <span class="text-primary fw-semibold">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
-                        <button class="btn btn-sm btn-link text-danger" onclick="removeFromCart({{ $id }})" title="Hapus">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <div class="text-center text-muted py-5">
-                <i class="fas fa-shopping-cart fa-3x mb-3"></i><br>
-                Keranjang kosong
-            </div>
-        @endif
-    </div>
-    <div class="p-3 border-top">
-        <div class="d-flex justify-content-between mb-2">
-            <span class="text-muted">Subtotal:</span>
-            <strong id="miniCartSubtotal">Rp {{ number_format($total, 0, ',', '.') }}</strong>
-        </div>
-        @if($discountAmount > 0)
-        <div class="d-flex justify-content-between mb-2 text-success">
-            <span><i class="fas fa-tag"></i> Diskon:</span>
-            <strong id="miniCartDiscount">- Rp {{ number_format($discountAmount, 0, ',', '.') }}</strong>
-        </div>
-        @endif
-        @if($total > 0 && $total < 100000)
-        <div class="alert alert-warning alert-sm py-1 mb-2" style="font-size: 11px; border-radius: 10px;">
-            <i class="fas fa-info-circle"></i> 
-            Belanja <strong>Rp {{ number_format(100000 - $total, 0, ',', '.') }}</strong> lagi untuk gratis ongkir
-        </div>
-        @elseif($total >= 100000)
-        <div class="alert alert-success alert-sm py-1 mb-2" style="font-size: 11px; border-radius: 10px;">
-            <i class="fas fa-truck"></i> <strong>Gratis Ongkir!</strong>
-        </div>
-        @endif
-        <hr>
-        <div class="d-flex justify-content-between mb-3">
-            <strong class="fs-5">Total:</strong>
-            <strong id="miniCartTotal" style="color: #FF6B35; font-size: 1.2rem;">
-                Rp {{ number_format($total - $discountAmount, 0, ',', '.') }}
-            </strong>
-        </div>
-        <a href="{{ route('cart.index') }}" class="btn btn-primary w-100" style="background: #FF6B35; border: none; border-radius: 30px; padding: 12px;">
-            <i class="fas fa-arrow-right"></i> Lihat Keranjang
-        </a>
-    </div>
-</div>
-<canvas id="confetti-canvas"></canvas>
+/* Mini Cart Sidebar Styles */
+.mini-cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+    z-index: 10000;
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
 
-<style>
-    /* Mini Cart Sidebar Styles */
+.mini-cart-sidebar.open {
+    right: 0;
+}
+
+.mini-cart-header {
+    background: linear-gradient(135deg, #2C1810 0%, #4A2C1A 100%);
+    color: white;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.mini-cart-items {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.mini-cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+}
+
+.mini-cart-item:last-child {
+    border-bottom: none;
+}
+
+.mini-cart-product-info {
+    flex: 2;
+}
+
+.mini-cart-product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2C1810;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.mini-cart-product-actions {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: none;
+    backdrop-filter: blur(3px);
+}
+
+.overlay.show {
+    display: block;
+}
+
+.alert-sm {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+@media (max-width: 576px) {
     .mini-cart-sidebar {
-        position: fixed;
-        top: 0;
-        right: -420px;
-        width: 400px;
-        height: 100vh;
-        background: white;
-        box-shadow: -5px 0 30px rgba(0,0,0,0.15);
-        z-index: 10000;
-        transition: right 0.3s ease-in-out;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .mini-cart-sidebar.open {
-        right: 0;
-    }
-    
-    .mini-cart-header {
-        background: linear-gradient(135deg, #2C1810 0%, #4A2C1A 100%);
-        color: white;
-        padding: 20px;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-    
-    .mini-cart-items {
-        flex: 1;
-        padding: 16px;
-        overflow-y: auto;
-        max-height: calc(100vh - 200px);
-    }
-    
-    .mini-cart-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid #f0f0f0;
-        gap: 10px;
-    }
-    
-    .mini-cart-item:last-child {
-        border-bottom: none;
-    }
-    
-    .mini-cart-product-info {
-        flex: 2;
-    }
-    
-    .mini-cart-product-name {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #2C1810;
-        margin-bottom: 4px;
-        line-height: 1.3;
-    }
-    
-    .mini-cart-product-actions {
-        text-align: right;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 9999;
-        display: none;
-        backdrop-filter: blur(3px);
+        right: -100%;
     }
-    
-    .overlay.show {
-        display: block;
-    }
-    
-    .alert-sm {
-        font-size: 11px;
-        padding: 6px 10px;
-        border-radius: 8px;
-    }
-    
-    @media (max-width: 576px) {
-        .mini-cart-sidebar {
-            width: 100%;
-            right: -100%;
-        }
-    }
-    
-    /* Scrollbar */
-    .mini-cart-items::-webkit-scrollbar {
-        width: 4px;
-    }
-    
-    .mini-cart-items::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    
-    .mini-cart-items::-webkit-scrollbar-thumb {
-        background: #C49A6C;
-        border-radius: 4px;
-    }
-    
-    /* Floating Cart Button */
-    .floating-cart {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 1000;
-    }
-    
-    .cart-count {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background: #ff4757;
-        color: white;
-        border-radius: 50%;
-        min-width: 20px;
-        height: 20px;
-        font-size: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 4px;
-    }
+}
+
+/* Scrollbar */
+.mini-cart-items::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mini-cart-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.mini-cart-items::-webkit-scrollbar-thumb {
+    background: #C49A6C;
+    border-radius: 4px;
+}
+
+/* Floating Cart Button */
+.floating-cart {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+}
 </style>
 
 <script>
@@ -829,7 +967,7 @@
         if (sidebar) {
             sidebar.classList.toggle('open');
             overlay.classList.toggle('show');
-            
+        
             if (sidebar.classList.contains('open')) {
                 loadMiniCart();
             }
@@ -918,11 +1056,8 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Update floating cart count
                 updateCartCount(data.cart_count);
-                // Reload mini cart
                 loadMiniCart();
-                // Optional: reload page to update main cart if on cart page
                 if (window.location.pathname.includes('/cart')) {
                     location.reload();
                 }
@@ -931,28 +1066,16 @@
         .catch(error => console.log('Error removing from cart:', error));
     }
     
-    // Update cart count badge
     function updateCartCount(count) {
         const floatingCartCount = document.getElementById('floatingCartCount');
-        
         if (floatingCartCount) {
             floatingCartCount.textContent = count;
-            if (count > 0) {
-                floatingCartCount.style.display = 'flex';
-            } else {
-                floatingCartCount.style.display = 'none';
-            }
+            floatingCartCount.style.display = count > 0 ? 'flex' : 'none';
         }
-        
-        // Also update navbar cart badge if exists
         const navbarCartBadge = document.querySelector('.cart-badge');
         if (navbarCartBadge) {
-            if (count > 0) {
-                navbarCartBadge.textContent = count;
-                navbarCartBadge.style.display = 'inline-block';
-            } else {
-                navbarCartBadge.style.display = 'none';
-            }
+            navbarCartBadge.style.display = count > 0 ? 'inline-block' : 'none';
+            if (count > 0) navbarCartBadge.textContent = count;
         }
     }
     
@@ -1088,19 +1211,19 @@
                 <h5><i class="fas fa-mug-hot"></i> Kopi Ancol</h5>
                 <p>Kedai kopi premium yang menyajikan biji kopi terbaik dari Colol, Manggarai timur. Rasakan aroma dan cita rasa kopi otentik yang kaya</p>
                 <div class="social-icons">
-    <a href="https://www.facebook.com/Iron" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-    <a href="https://www.instagram.com/@Iron-vlts" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://www.twitter.com/kopiancol" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-twitter"></i>
-    </a>
-    <a href="https://wa.me/6281246135710" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-</div>
+                    <a href="https://www.facebook.com/Iron" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/@Iron-vlts" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.twitter.com/kopiancol" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://wa.me/6281246135710" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
             </div>
             <div class="col-md-4 mb-4">
                 <h5>Quick Links</h5>
@@ -1630,6 +1753,152 @@
         
         observer.observe(document.body, { childList: true, subtree: true });
     });
+
+    // ========== PWA Installation ==========
+    let deferredPrompt;
+    let pwaInstallBanner = document.getElementById('pwa-install-banner');
+    let pwaInstallBtn = document.getElementById('pwa-install-btn');
+    let pwaCloseBtn = document.getElementById('pwa-close-btn');
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        console.log('New Service Worker installing...');
+                        
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('New update available!');
+                                showUpdateNotification();
+                            }
+                        });
+                    });
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        });
+    }
+
+    // Handle beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('beforeinstallprompt event fired');
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Show install banner (if not dismissed before)
+        const pwaDismissed = localStorage.getItem('pwa-banner-dismissed');
+        if (!pwaDismissed) {
+            showPWAInstallBanner();
+        }
+    });
+
+    // Show PWA install banner
+    function showPWAInstallBanner() {
+        if (pwaInstallBanner) {
+            pwaInstallBanner.style.display = 'block';
+        }
+    }
+
+    // Hide PWA install banner
+    function hidePWAInstallBanner() {
+        if (pwaInstallBanner) {
+            pwaInstallBanner.style.display = 'none';
+        }
+    }
+
+    // Install PWA
+    if (pwaInstallBtn) {
+        pwaInstallBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                hidePWAInstallBanner();
+                localStorage.setItem('pwa-banner-dismissed', 'true');
+            }
+        });
+    }
+
+    // Close install banner
+    if (pwaCloseBtn) {
+        pwaCloseBtn.addEventListener('click', () => {
+            hidePWAInstallBanner();
+            localStorage.setItem('pwa-banner-dismissed', 'true');
+        });
+    }
+
+    // Show update notification
+    function showUpdateNotification() {
+        const updateToast = document.createElement('div');
+        updateToast.className = 'update-toast';
+        updateToast.innerHTML = `
+            <div class="update-toast-content">
+                <i class="fas fa-sync-alt"></i>
+                <div>
+                    <strong>Update Tersedia!</strong>
+                    <small>Klik untuk refresh aplikasi</small>
+                </div>
+                <button onclick="location.reload()" class="update-btn">Update</button>
+            </div>
+        `;
+        document.body.appendChild(updateToast);
+        
+        setTimeout(() => {
+            updateToast.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            updateToast.remove();
+        }, 10000);
+    }
+
+    // Check if app is installed
+    function isPWAInstalled() {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('App is running in standalone mode (installed)');
+            return true;
+        }
+        return false;
+    }
+
+    // Set user online/offline status
+    window.addEventListener('online', () => {
+        console.log('Network connection restored');
+        showNetworkStatus('online', 'Koneksi kembali online');
+    });
+
+    window.addEventListener('offline', () => {
+        console.log('Network connection lost');
+        showNetworkStatus('offline', 'Koneksi terputus! Beberapa fitur mungkin tidak tersedia');
+    });
+
+    function showNetworkStatus(status, message) {
+        const toast = document.createElement('div');
+        toast.className = `network-toast network-${status}`;
+        toast.innerHTML = `
+            <div class="network-toast-content">
+                <i class="fas ${status === 'online' ? 'fa-wifi' : 'fa-plug'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
 </script>
 
 @stack('scripts')

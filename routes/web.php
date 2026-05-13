@@ -392,5 +392,9 @@ Route::get('/free-shipping/check', [App\Http\Controllers\FreeShippingController:
 Route::post('/free-shipping/apply', [App\Http\Controllers\FreeShippingController::class, 'applyFreeShipping'])->name('free.shipping.apply');
 Route::get('/free-shipping/detail', [App\Http\Controllers\FreeShippingController::class, 'getDetail'])->name('free.shipping.detail');
 
+Route::get('/offline', function () {
+    return view('offline');
+})->name('offline');
+
 // ==================== BREEZE AUTH ROUTES ====================
 require __DIR__.'/auth.php';
